@@ -1,228 +1,246 @@
-# NASA Weather Data Visualization Dashboard
+# Climatological Probability Analysis
 
-This repository is a comprehensive weather and earth observation data dashboard (React + Vite) that integrates multiple NASA Earth science APIs with Meteomatics weather data. Users can select locations, choose single dates or date ranges, and select from a wide variety of NASA satellite and climate parameters to create rich visualizations and analyses.
+A comprehensive web application for analyzing climatological data and calculating weather event probabilities using historical data and statistical methods.
 
-## 🛰️ NASA APIs Integrated
+## 🌟 Features
 
-The dashboard now supports **5 major NASA data sources**:
+- **Interactive Web Interface**: Easy-to-use Streamlit-based UI
+- **Meteomatics API Integration**: Access to comprehensive weather data
+- **Statistical Analysis**: Probability calculations, trend analysis, and risk assessment
+- **Visual Analytics**: Interactive charts and graphs using Plotly
+- **Multiple Parameters**: Support for temperature, precipitation, wind speed, humidity, and more
+- **Return Period Analysis**: Calculate expected return periods for extreme events
+- **Risk Assessment**: Comprehensive risk categorization and interpretation
 
-- **NASA POWER** - Meteorological and solar energy data (1981-present)
-- **MODIS** - Satellite imagery and vegetation indices (2000-present)  
-- **Giovanni** - Atmospheric and climate data analysis (1979-present)
-- **GOES** - Real-time geostationary weather satellite data (2017-present)
-- **Earthdata** - Multi-mission Earth science datasets (1979-present)
+## 🚀 Quick Start
 
-## 🌍 Key Features
+### Prerequisites
 
-- **Interactive Location Selection**: Click-to-select on map, place search, voice input, manual coordinates
-- **Flexible Date Selection**: Single date or date range analysis
-- **Comprehensive Parameter Selection**: 25+ NASA parameters across atmospheric, surface, and satellite measurements
-- **Multi-Source Visualization**: Compare and analyze data from multiple NASA sources simultaneously
-- **Export Capabilities**: Download data and charts for further analysis
+- Python 3.8 or higher
+- Meteomatics API account (configured in `config.py`)
 
-<!-- Developer docs links -->
+### Installation
 
-Developer documentation:
+1. **Clone or download this repository**
+   ```powershell
+   cd "c:\Users\Alienware\Documents\Hackathon\Nasa Space Challenge\Model\Climatological Probability Analysis"
+   ```
 
-- `docs/backend.md` — backend developer notes and API/service details
-- `docs/ui-designer.md` — UI/UX and component guidance for designers
+2. **Create a virtual environment (recommended)**
+   ```powershell
+   python -m venv venv
+   venv\Scripts\activate
+   ```
 
+3. **Install required packages**
+   ```powershell
+   pip install -r requirements.txt
+   ```
 
-## Highlights / Features
+4. **Configure API credentials (already done!)**
+   Your Meteomatics API credentials are pre-configured in `config.py`:
+   - Username: `namez_yasser`
+   - Valid until: `2025-10-12`
 
-- Map selector (Leaflet) with draggable pin and click-to-select
-- Search box with autocomplete (Nominatim) for location lookup
-- Control panel to choose a single event date or a date range and which variables to visualize
-- Charts (time-series) and summary statistics (probabilities, bell-curve approximation)
-- Export panel (CSV/JSON) — gated behind a mock login (register/login stored in localStorage)
-- Top navigation with Login/Register button that opens an account modal
+### Running the Application
 
-## Getting started
-
-1. Install dependencies
-
+#### Quick Start
 ```powershell
-npm install
+python start_app.py
 ```
 
-2. Start the dev server
-
+#### Manual Start
 ```powershell
-npm run dev
+streamlit run app.py
 ```
 
-Open the URL printed by Vite (usually http://localhost:5173).
-
-## Account / Authentication (prototype)
-
-The app includes a simple mock auth flow. Click "Login / Register" in the top nav to open the account modal. Registration stores a simple user object and preferences in `localStorage` for personalization. This is a prototype-only approach — for production use a secure backend or identity provider.
-
-## Meteomatics API (optional real integration)
-
-The app includes `src/services/meteomatics.js` which builds requests using the Meteomatics API format:
-
-GET https://api.meteomatics.com/{datetime}/{parameters}/{lat},{lon}/json
-
-If you want to test with real Meteomatics responses you can provide credentials to the client (for testing only) via Vite env vars:
-
-1. Copy `.env.example` to `.env` in the project root (create `.env` if not present).
-2. Add the following lines to `.env` (do NOT commit this file):
-
-```
-VITE_METEO_USER=your_meteomatics_username
-VITE_METEO_PASSWORD=your_meteomatics_password
+#### Test API Connection
+```powershell
+python test_api.py
 ```
 
-3. Restart the dev server.
+## 📖 How to Use
 
-The Control Panel UI also allows setting credentials for a single query run. Reminder: never put credentials into client-side code in production — use a backend proxy to keep keys secret.
+### 1. Configure API
+- Your Meteomatics API credentials are pre-configured in `config.py`
+- The app will automatically use these credentials
+- You can override them in the sidebar if needed
 
-## Geocoding / Autocomplete
+### 2. Select Location
+- Search for a location by name (e.g., "New York", "London")
+- Or enter latitude and longitude coordinates manually
 
-The place input in the Control Panel uses Nominatim for geocoding and offers simple autocomplete suggestions as you type. Selecting a suggestion updates the map pin.
+### 3. Choose Analysis Parameters
+- **Date**: Select the date you want to analyze
+- **Parameters**: Choose weather parameters (temperature, precipitation, etc.)
+- **Years**: Set how many years of historical data to analyze (10-50 years)
 
-## Export and gated features
+### 4. Run Analysis
+- Click "Run Analysis" button
+- Wait for the analysis to complete
+- Review results in the main area
 
-Export (CSV/JSON) and certain advanced features are gated behind the mock login to encourage users to register in the prototype. You can still view charts without logging in.
+## 📊 Understanding the Results
 
-## Troubleshooting
+### Basic Statistics
+- **Mean**: Average value over the analysis period
+- **Standard Deviation**: Measure of variability
+- **Min/Max**: Extreme values recorded
+- **Data Years**: Number of years analyzed
 
-- If Vite prints the local URL but the server stops unexpectedly, re-run `npm run dev` and watch the terminal for errors.
-- If the app fails to fetch Meteomatics data, double-check credentials and the `datetime` / `parameters` formatting.
+### Probability Analysis
+- **Extreme Event Probabilities**: Chance of exceeding thresholds
+- **Comfortable Conditions**: Probability of ideal conditions
+- **Return Periods**: Expected frequency of extreme events
 
-## Next steps / Improvements
+### Trend Analysis
+- **Trend Detection**: Statistical significance of long-term changes
+- **Direction**: Increasing, decreasing, or stable trends
+- **Strength**: Correlation coefficient indicating trend reliability
 
-- Add backend for authentication and a secure proxy for Meteomatics calls
-- Debounce the Nominatim autocomplete for better performance
-- Render one chart per selected parameter (currently the prototype focuses on temperature)
-- Add map overlays / heatmaps for spatial visualizations
+### Risk Assessment
+- **Risk Categories**: Low, Moderate, High, Very High
+- **Percentile Analysis**: Distribution of historical values
+- **Extreme Value Analysis**: Gumbel distribution fitting for return periods
 
-If you'd like, I can continue by polishing the autocomplete (add debounce), building charts for each selected parameter, or scaffolding a minimal backend for secure Meteomatics proxying.
+## 🛠️ Technical Details
 
-## Use cases & parameter mapping
+### Architecture
+```
+Climatological Probability Analysis/
+├── app.py                          # Main Streamlit application
+├── config.py                       # Configuration with API credentials
+├── start_app.py                     # Quick launcher script
+├── test_api.py                     # API connection test script
+├── src/
+│   ├── meteomatics_client.py      # API client for weather data
+│   ├── climatological_analyzer.py  # Statistical analysis engine
+│   └── weather_query_processor.py  # Query processing and coordination
+├── data/                           # Data storage (generated)
+├── requirements.txt                # Python dependencies
+└── README.md                      # This file
+```
 
-Below are practical domains where the Meteomatics + NASA POWER combination in this prototype can be applied, with suggested Meteomatics parameters that matter for each use case. Use this as a starting point to create tailored dashboards or alerts.
+### Key Components
 
-- Aquatic & water sports (swimming, surfing, sailing, diving)
-	- Key concerns: wave/wind conditions, precipitation, temperature, visibility, solar radiation
+1. **MeteomaticsClient**: Handles API communication and data retrieval
+2. **ClimatologicalAnalyzer**: Performs statistical calculations and probability analysis
+3. **WeatherQueryProcessor**: Coordinates analysis workflow and handles user queries
+4. **Streamlit App**: Provides interactive web interface
 
-Below are more detailed parameter lists for each use case. For each parameter you'll find: Friendly name — Meteomatics code — unit — why it matters.
+### Supported Weather Parameters
 
-- Aquatic & water sports (swimming, surfing, sailing, diving)
-	- Wind speed — `wind_speed_10m:ms` — m/s — influences wave height, safety for small craft and surfers.
-	- Wind gust — `wind_gust_10m:ms` — m/s — sudden gusts affect small boats and kitesurfing safety.
-	- Wind direction — `wind_direction_10m:d` — ° — determines onshore/offshore conditions and wave approach.
-	- Precipitation (1h) — `precip_1h:mm` — mm — rain events affect visibility and comfort; intense rain can reduce water quality.
-	- Visibility — `visibility:m` — m — critical for navigation and safety in maritime activities.
-	- Air temperature — `t_2m:C` — °C — water/air comfort and hypothermia risk; helps decide wetsuit needs.
-	- Shortwave radiation — `shortwave_radiation_flux_density:W/m2` — W/m2 — solar exposure and UV-related risk for participants.
+- Temperature (2m, max, min)
+- Precipitation (24h)
+- Wind speed and gusts
+- Relative humidity
+- Mean sea level pressure
+- Sunshine duration
 
-- Agriculture & farming
-	- Air temperature — `t_2m:C` — °C — crop growth, degree-day accumulation, frost risk.
-	- Dew point — `dew_point_2m:C` — °C — indicates humidity and condensation/frost potential.
-	- Cumulative precipitation — `precip_total:mm` — mm — irrigation planning and waterlogging risk.
-	- Precipitation (1h) — `precip_1h:mm` — mm — storm intensity and soil infiltration considerations.
-	- Soil moisture (0–10cm) — `soil_moisture_0_10cm:m3/m3` — m3/m3 — direct measure of topsoil wetness for planting and tillage.
-	- Evapotranspiration — `evapotranspiration:mm` — mm — irrigation needs and water balance.
-	- Potential evapotranspiration — `potential_evapotranspiration:mm` — mm — crop water requirement estimates.
-	- Frost/low-temp indicators (use temps + dew point) — `t_2m:C`, `dew_point_2m:C` — °C — protect sensitive crops.
+## 🔧 Configuration
 
-- Public health & heat / cold exposure
-	- Air temperature — `t_2m:C` — °C — heat stress / cold exposure risk.
-	- Relative humidity — `relative_humidity_2m:p` — % — combined with temp to compute heat index.
-	- Shortwave radiation — `shortwave_radiation_flux_density:W/m2` — W/m2 — UV exposure and solar load.
-	- Precipitation — `precip_1h:mm` — mm — impacts disease vector habitats and sheltering needs.
-	- Air density — `air_density:kg/m3` — kg/m3 — affects pollutant dispersion (for air quality contexts).
+### API Setup
+Your Meteomatics API credentials are already configured in `config.py`:
+- Username: `namez_yasser`
+- Password: `3O82Fi0nIZ9iSKF6J768`
+- Valid until: `2025-10-12`
 
-- Supply chain & logistics (road/sea transport)
-	- Visibility — `visibility:m` — m — critical for road and port operations.
-	- Precipitation (1h) — `precip_1h:mm` — mm — flooding and icing risk; affects driving conditions.
-	- Mean sea level pressure — `mean_sea_level_pressure:Pa` — Pa — synoptic storm tracking for route planning.
-	- Wind speed/gust — `wind_speed_10m:ms`, `wind_gust_10m:ms` — m/s — affects shipping and high-sided vehicles.
-	- Temperature — `t_2m:C` — °C — perishable cargo management; freezing risk.
+The application will automatically use these credentials. You can test the connection by running:
+```powershell
+python test_api.py
+```
 
-- Energy (solar & wind ops)
-	- Shortwave radiation — `shortwave_radiation_flux_density:W/m2` — W/m2 — primary input for solar PV output.
-	- Wind speed and gust — `wind_speed_10m:ms`, `wind_gust_10m:ms` — m/s — wind turbine generation and cut-in/cut-out conditions.
-	- Wind direction — `wind_direction_10m:d` — ° — turbine yaw optimization and wake modeling.
-	- Temperature — `t_2m:C` — °C — affects panel efficiency and thermal limits.
-	- Air density — `air_density:kg/m3` — kg/m3 — small correction for wind turbine power estimates.
+### Demo Mode
+- The application includes mock data generation for testing
+- No API credentials required for demo functionality
+- Sample data simulates realistic weather patterns
 
-- Aviation & drones
-	- Wind speed & components — `wind_speed_10m:ms`, `u_component_of_wind_10m:ms`, `v_component_of_wind_10m:ms` — m/s — operational limits and flight planning.
-	- Wind direction — `wind_direction_10m:d` — ° — runway selection and takeoff/landing safety.
-	- Visibility — `visibility:m` — m — instrument vs visual flight rules.
-	- Cloud cover — `cloud_cover:p` / `total_cloud_cover:p` — % — ceiling and cloud base considerations.
-	- Precipitation — `precip_1h:mm` — mm — icing and wet-runway hazards.
+## 📈 Example Use Cases
 
-- Construction & outdoor events
-	- Precipitation (1h) — `precip_1h:mm` — mm — site runoff, mud, and postponement decisions.
-	- Wind speed & gust — `wind_speed_10m:ms`, `wind_gust_10m:ms` — m/s — crane operations, temporary structure safety.
-	- Temperature — `t_2m:C` — °C — material curing and worker safety.
-	- Convective precipitation — `convective_precipitation:mm` — mm — short, intense storms that cause flash hazards.
-	- Ground heat flux / soil temp — `ground_heat_flux:W/m2`, `soil_temperature_0cm:C` — relevant for groundworks.
+### 1. Agricultural Planning
+- Analyze frost probability for crop protection
+- Assess precipitation patterns for irrigation planning
+- Evaluate growing season temperature trends
 
-- Research & environmental monitoring
-	- Tailor to the study, common choices:
-		- Temperature & humidity — `t_2m:C`, `relative_humidity_2m:p` — climate and microclimate studies.
-		- Radiation budgets — `shortwave_radiation_flux_density:W/m2`, `longwave_radiation_flux:W/m2`, `direct_radiation:W/m2`, `diffuse_radiation:W/m2`.
-		- Soil & hydrology — `soil_moisture_0_10cm:m3/m3`, `precip_total:mm`, `snow_depth:mm`.
-		- Air density / pressure — `air_density:kg/m3`, `mean_sea_level_pressure:Pa` — meteorological context and derived variables.
+### 2. Event Planning
+- Determine weather probability for outdoor events
+- Assess seasonal patterns for optimal scheduling
+- Risk analysis for weather-dependent activities
 
-Notes
-- The parameter codes shown correspond to commonly-used Meteomatics fields (see `src/services/meteomatics_params.js` for the canonical mapping used by this app).
-- Some parameters are model-dependent and may be omitted for specific model/time combinations; the UI handles omitted parameters and offers to remove them from the selection automatically.
-- If you want, I can add a one-click preset for each use case that selects exactly the listed parameters in the Control Panel (I already added a presets selector — I can link each preset description here to the dropdown).
+### 3. Climate Research
+- Study long-term temperature trends
+- Analyze extreme weather event frequency
+- Assess climate change impacts on local weather
 
-How to jump from this README to a preset in the app
+### 4. Infrastructure Planning
+- Design requirements for extreme weather events
+- Risk assessment for weather-sensitive infrastructure
+- Return period analysis for engineering design
 
-You can open the app and have a preset automatically selected by using a URL with the `preset` query parameter or hash. For example:
+## 🚨 Troubleshooting
 
-- Open the Agriculture preset:
+### Common Issues
 
-	- As a query param: `/?preset=Agriculture`
-	- As a hash: `/#preset=Agriculture`
+1. **Import Errors**
+   ```powershell
+   # Reinstall packages
+   pip install --upgrade -r requirements.txt
+   ```
 
-Below are quick links that will open the app and pre-select the corresponding preset (use when the dev server is running):
+2. **API Connection Issues**
+   - Check internet connection
+   - Verify API credentials
+   - Use demo mode for testing
 
-- Agriculture: `/?preset=Agriculture` or `/#preset=Agriculture`
-- Energy: `/?preset=Energy` or `/#preset=Energy`
-- Aquatic Sports: `/?preset=Aquatic%20Sports` or `/#preset=Aquatic%20Sports`
-- Aviation: `/?preset=Aviation` or `/#preset=Aviation`
-- Supply Chain: `/?preset=Supply%20Chain` or `/#preset=Supply%20Chain`
-- Health: `/?preset=Health` or `/#preset=Health`
+3. **Streamlit Not Starting**
+   ```powershell
+   # Check if streamlit is installed
+   streamlit --version
+   
+   # Reinstall if needed
+   pip install streamlit --upgrade
+   ```
 
-When you open the app with one of these URLs the Control Panel will automatically apply that preset so you can run the query immediately.
+4. **Port Already in Use**
+   ```powershell
+   # Use different port
+   streamlit run app.py --server.port 8502
+   ```
 
-- Agriculture & farming
-	- Key concerns: temperature extremes, precipitation and cumulative rainfall, soil moisture, evapotranspiration, frost risk
-	- Suggested parameters: `t_2m:C`, `precip_total:mm` (or `precip_1h:mm` for higher cadence), `soil_moisture_0_10cm:m3/m3`, `evapotranspiration:mm`, `dew_point_2m:C`
+### Performance Tips
 
-- Public health & air quality planning
-	- Key concerns: heat stress, humidity, precipitation (vector-borne disease risk), solar radiation (UV exposure)
-	- Suggested parameters: `t_2m:C`, `relative_humidity_2m:p`, `precip_1h:mm`, `shortwave_radiation_flux_density:W/m2`
+- Use shorter time periods (10-20 years) for faster analysis
+- Limit the number of parameters analyzed simultaneously
+- Use demo mode for development and testing
 
-- Supply chain & logistics (road/sea transport)
-	- Key concerns: visibility, precipitation (icing, flooding), wind, temperature affecting perishable goods
-	- Suggested parameters: `visibility:m`, `precip_1h:mm`, `t_2m:C`, `mean_sea_level_pressure:Pa` (for storm systems), `wind_speed_10m:ms`
+## 🔮 Future Enhancements
 
-- Energy (solar / wind)
-	- Key concerns: solar radiation for PV, wind speed and gusts for turbines, temperature for efficiency
-	- Suggested parameters: `shortwave_radiation_flux_density:W/m2`, `wind_speed_10m:ms`, `wind_gust_10m:ms`, `t_2m:C`
+- [ ] Integration with additional weather data sources
+- [ ] Machine learning-based pattern recognition
+- [ ] Automated report generation (PDF/Word)
+- [ ] Multi-location comparison analysis
+- [ ] Advanced visualization options
+- [ ] Mobile-responsive design improvements
+- [ ] Data export functionality (CSV, JSON)
+- [ ] Custom threshold configuration
+- [ ] Seasonal analysis breakdown
+- [ ] Integration with GIS mapping services
 
-- Aviation & drones
-	- Key concerns: wind speed/direction aloft (use model-specific higher-level params if available), visibility, cloud cover, precipitation
-	- Suggested parameters: `wind_speed_10m:ms`, `wind_direction_10m:d`, `visibility:m`, `cloud_cover:p`, `precip_1h:mm`
+## 📄 License
 
-- Construction & outdoor events
-	- Key concerns: precipitation, wind, temperature, lightning risk (derived from convective parameters), ground conditions
-	- Suggested parameters: `precip_1h:mm`, `wind_speed_10m:ms`, `t_2m:C`, `convective_precipitation:mm`
+This project is open source and available under the MIT License.
 
-- Research & environmental monitoring
-	- Key concerns: depending on the study — temperature, precipitation, radiation, soil moisture, long-term trends
-	- Suggested parameters: mix of `t_2m:C`, `precip_total:mm`, `shortwave_radiation_flux_density:W/m2`, `soil_moisture_0_10cm:m3/m3`, `air_density:kg/m3`
+## 🤝 Contributing
 
-Notes
-- The list above is a curated starting point — Meteomatics supports many more specialized parameters. The app now includes a central parameter map (`src/services/meteomatics_params.js`) to help you add or customize parameter selections for any use case.
-- When creating dashboards for operational use, consider model availability (some parameters may not be provided for all models/times), and use the omitted-parameter handling provided in the UI to adapt automatically.
+Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
 
+## 📞 Support
+
+For technical support or questions:
+1. Check the troubleshooting section above
+2. Review the Meteomatics API documentation
+3. Open an issue in this repository
+
+---
+
+**Happy Analyzing! 🌤️**
